@@ -1,4 +1,4 @@
-# Adjusted for pygsheets, made efficient as possible, runs in arround 2 seconds!!!
+# Adjusted for pygsheets, made efficient as possible, runs in around 2 seconds!!!
 import pygsheets
 
 def main():
@@ -34,7 +34,7 @@ def main():
         teamSummarySheet.insert_rows(count, len(teamMatrix), teamMatrix, inherit=False) 
 
     ## Create client
-    client = pygsheets.authorize(service_account_file="challenge-tracking-python-ca37993cfad5.json")
+    client = pygsheets.authorize(service_account_file="PRIVATEKEY.json") # Your private key here. Will download it from Google API
 
     ## Print the title of the sheet to confirm it opened
     print(client.spreadsheet_titles())
