@@ -6,7 +6,7 @@ def main():
     start = datetime.datetime.now()
 
     ## Create client
-    client = pygsheets.authorize(service_account_file="challenge-tracking-python-ca37993cfad5.json")
+    client = pygsheets.authorize(service_account_file="PRIVATEKEY.JSON") # Will require you to download the private key from Google API
 
     ## Print the title of the sheet to confirm it opened
     #print(client.spreadsheet_titles())
