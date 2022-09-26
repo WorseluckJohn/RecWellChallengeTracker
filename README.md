@@ -5,6 +5,7 @@ Instructions:
   * Then, paste "py -m ensurepip --upgrade" into command prompt.
   * Afterwards, paste "pip install pygsheets" as well.
 * Will require you to download Google API's private key for Google Sheets. If you are creating a new account, follow the link https://www.geeksforgeeks.org/how-to-automate-google-sheets-with-python/. If you are using purdueheadguard@gmail.com, please follow the instructions bellow. 
+  * If creating a new Google Sheet, please add lifeguard-challenges@challenge-tracking-python.iam.gserviceaccount.com as an editor to the sheet.
   * Click on the project "Challenge-Tracking-Python".
   * Go to the project settings, within the "Dashboard" tab, under "Project Info".
   * From there, go to "Service accounts" on the left dropdown menu.
