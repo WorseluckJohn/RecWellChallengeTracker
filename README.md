@@ -4,7 +4,7 @@ Instructions:
   * To download pygsheets, open command prompt by searching up cmd or pressing "Windows"+"R" keys and typing cmd. If on Mac open terminal.
   * If on Windows, paste "py -m ensurepip --upgrade" into command prompt. If on Mac "curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py" and, then "python3 get-pip.py". Do not include quation marks. 
   * Then for both Windows and Mac, paste "pip install pygsheets". 
-  * This code will require you to download Google API's private key for Google Sheets. Make sure you are using the purdueheadguard@gmail.com for the following. Please follow the instructions bellow. 
+  * This code will require you to download Google API's private key for Google Sheets. Make sure you are using the purdueheadguard@gmail.com for the following. Please follow the instructions below.
   * If creating a new Google Sheet, please add lifeguard-challenges@challenge-tracking-python.iam.gserviceaccount.com as an editor to the Google Sheet that will be used.
   * Go to https://console.cloud.google.com  
   * Click on the project "Challenge-Tracking-Python".
