@@ -1,7 +1,7 @@
-# Adjusted for pygsheets, made efficient as possible, runs in around 2 seconds!!!
+# Adjusted for pygsheets, made efficient as possible, runs in arround 2 seconds!!!
 import pygsheets
 
-def main():
+def main(keyName, masterSheetName):
     def makeSummarySheet(summaryTable, summarySheet, numCycles):
         summarySheet.clear(fields="*")
         count = 1
@@ -11,7 +11,7 @@ def main():
         matrix = []
 
         for keys in summaryTable.keys():
-            matrix.append([keys, summaryTable[keys][0], summaryTable[keys][1], numCycles * 5])
+            matrix.append([keys, summaryTable[keys][0], summaryTable[keys][1], int(summaryTable[keys][2]) * 5])
 
             count = count + 1
 
@@ -34,16 +34,23 @@ def main():
         teamSummarySheet.insert_rows(count, len(teamMatrix), teamMatrix, inherit=False) 
 
     ## Create client
-    client = pygsheets.authorize(service_account_file="PRIVATEKEY.json") # Your private key here. Will download it from Google API
+    client = pygsheets.authorize(service_account_file=keyName)
 
     ## Print the title of the sheet to confirm it opened
     print(client.spreadsheet_titles())
 
     #sheet = client.open("Python-Test")
-    sheet = client.open("Master Challenges Sheet")
+    sheet = client.open(masterSheetName)
 
     passwordSheet = sheet.worksheet("title", "Passwords")
     listOfLifeguards = sheet.worksheet("title", "LifeguardList")
+
+    try:
+        sheet.add_worksheet("Summary")
+        sheet.add_worksheet("Team Summaries")
+    except:
+        print("Sheets Exist")
+
     summarySheet = sheet.worksheet("title", "Summary")
     teamSummarySheet = sheet.worksheet("title", "Team Summaries")
 
@@ -66,7 +73,7 @@ def main():
             currLifeguard = cells[r + 1][0].lower().title().strip()
 
             if not currLifeguard.isspace():
-                summaryTable[currLifeguard] = [cells[r + 1][1], 0] # Initial value 0 for number of challenges done
+                summaryTable[currLifeguard] = [cells[r + 1][1], 0, 0] # Initial value 0 for number of challenges done, and num cycles present
     except:
         print("")
 
@@ -86,6 +93,7 @@ def main():
                     currValue = int(cells[r + 1][3])
                     currTeam = summaryTable[currLg][0]
                     summaryTable[currLg][1] = summaryTable[currLg][1] + currValue
+                    summaryTable[currLg][2] = summaryTable[currLg][2] + 1
                     teamTable[currTeam] = teamTable[currTeam] + currValue
                 except Exception as e:
                     print(e)

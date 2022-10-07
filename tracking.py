@@ -2,11 +2,11 @@ import pygsheets # need to import'
 import datetime 
 from collections import OrderedDict
 
-def main():
+def main(keyName, masterSheetName):
     start = datetime.datetime.now()
 
     ## Create client
-    client = pygsheets.authorize(service_account_file="PRIVATEKEY.JSON") # Will require you to download the private key from Google API
+    client = pygsheets.authorize(service_account_file=keyName)
 
     ## Print the title of the sheet to confirm it opened
     #print(client.spreadsheet_titles())
@@ -14,7 +14,7 @@ def main():
 
     ## Open spreadsheet by name/title
     #sheet = client.open("Python-Test")
-    sheet = client.open("Master Challenges Sheet")
+    sheet = client.open(masterSheetName)
 
     def _makeTable(currResponsesWorksheet, trackingWorksheet, currPassword, listOfLifeguards): 
         challengeTable = {}
@@ -83,13 +83,25 @@ def main():
 
         #wks.add_conditional_formatting('A1', 'A4', 'NUMBER_BETWEEN', {'backgroundColor':{'red':1}}, ['1','5'])
 
-    ## Open worksheet by name/title
+    try:
+        sheet.add_worksheet("Passwords")
+    except:
+        print("")
+
     passwordSheet = sheet.worksheet("title", "Passwords")
 
     cycles = passwordSheet.get_all_values(include_tailing_empty_rows=False, include_tailing_empty=False, returnas='matrix')
 
     numCycles = len(cycles) - 1
     print("Cycle number: " + str(numCycles))
+
+    try:
+        print("Creating new sheets")
+        sheet.add_worksheet(f"Cycle{numCycles} Tracking")
+        sheet.add_worksheet("LifeguardList")
+        sheet.worksheet("title", "LifeguardList").insert_rows(0, 1, ["Lifeguard Name:", "Team Number"], inherit=False)
+    except:
+        print("")
 
     listOfLifeguards = sheet.worksheet("title", "LifeguardList").get_all_values(include_tailing_empty_rows=False, include_tailing_empty=False, returnas='matrix')
     listOfLifeguards.pop(0) 
