@@ -27,10 +27,13 @@ def main(keyName, masterSheetName):
             challengeTable[currLg] = [lg[1]]
         
         # Input: Column 1: lg name, 2: team num, 3: challenges completed, 6: password
+
+        passwordCol = len(cells[0]) - 1 # Password is always at last column
+
         try:
             for r in range(end_row):
                 # NEED TO KEEP PASSWORD COLLUMN CONSISTENT!
-                if cells[r + 1][6].lower().replace(" ", "") == currPassword.lower(): 
+                if cells[r + 1][passwordCol].lower().replace(" ", "") == currPassword.lower(): 
                     # Can make this faster with getting entire matrix rather than checking cells one by one
                     currLifeguard = cells[r + 1][1].lower().title().strip()
 
@@ -96,10 +99,10 @@ def main(keyName, masterSheetName):
     print("Cycle number: " + str(numCycles))
 
     try:
-        print("Creating new sheets")
         sheet.add_worksheet(f"Cycle{numCycles} Tracking")
         sheet.add_worksheet("LifeguardList")
         sheet.worksheet("title", "LifeguardList").insert_rows(0, 1, ["Lifeguard Name:", "Team Number"], inherit=False)
+        print("Creating new sheets")
     except:
         print("")
 
